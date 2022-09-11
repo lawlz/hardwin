@@ -77,20 +77,6 @@ if (-not $noBackup){
     }
 
 }
-# # add or remove settings
-# Function AddOrRemoveSetting($settings) {
-#     $selectedSettings = @()
-#     foreach ($setting in $settings) {
-#         If ($setting -like "^[!,#]") {
-#             # If the name starts with exclamation mark (!), exclude the setting$setting from selection
-#             $setting = Where-Object { $_ -ne $setting.Substring(1) }
-#         } ElseIf ($setting -ne "") {
-#             # Otherwise add the setting$setting
-#             $selectedSettings += $setting
-#         }
-#     }
-#     return $selectedSettings
-# }
 
 # get the preset file settings
 [regex]$getNoSet = "^#.*"
@@ -118,3 +104,10 @@ foreach ($config in $presets) {
 
 }
 
+
+
+#TODOs
+#  Services not disabling:  server, workstation, iphelper, RPCs, TCP/IP NetBIOS helper
+#  App not uninstalling:  Tiktok, prime vid, Disney and some PS thing
+#  Run a check routine maybe?  Like a self nmap or something?GET-=
+#
