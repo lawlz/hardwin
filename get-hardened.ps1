@@ -41,6 +41,7 @@ Function Get-FileName {
 
 # make sure the preset file is there
 if (-not $presetLocation) {
+    write-host "Please select the file to pull your presets from"
     $presetLocation = Get-FileName
 }
 $presetLocation
@@ -56,6 +57,7 @@ $presetLocation
 
 if (-not $noBackup){
     # Let the user choose the registry backup destination directory
+    write-host "Where would you like to backup the files?"
     $regBckpDir = Get-Filename
     if (!$regBckpDir) {
         Write-Warning("You must select a directory to save the .reg files")
