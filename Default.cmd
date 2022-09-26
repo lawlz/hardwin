@@ -1,1 +1,3 @@
-@powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0Win10.ps1" -include "%~dp0Win10.psm1" -preset "%~dpn0.preset"
+@REM Old command...  
+
+@powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0get-hardened.ps1" -include "%~dp0Utils.psm1" -preset "%~dpn0default.preset"
