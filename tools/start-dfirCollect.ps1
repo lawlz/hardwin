@@ -49,9 +49,7 @@ if ( $Complete ) {
 }
 
 $OutputDirectory = $EvidenceId
-$OutputZipFile = ( $EvidenceId + ".zip" )
-$OutputHashFile = ( $EvidenceId + ".sha256" )
-$TotalSections = 31
+$TotalSections = 7
 
 Function Prepare-Section {
     <#
@@ -101,18 +99,25 @@ Function Prepare-Section {
 $now = Get-Date
 Write-Host "Starting the collection process. Output directory: $OutputDirectory. Date: $now" -ForegroundColor Green
 
-# Delete output directories and files if they exist
-Remove-Item $OutputDirectory -Recurse -ErrorAction Ignore
-Remove-Item $OutputZipFile -ErrorAction Ignore
-Remove-Item $OutputHashFile -ErrorAction Ignore
-# Create the output directory and change directory to it
-mkdir $OutputDirectory | Out-Null
+# backup the previous files
+# Remove-Item $OutputDirectory -Recurse -ErrorAction Ignore
+# Remove-Item $OutputZipFile -ErrorAction Ignore
+# Remove-Item $OutputHashFile -ErrorAction Ignore
+if (!($backupFolder)){
+    $backupFolder = "$OutputDirectory\backups"
+    mkdir -path $backupFolder -force
+}
+
+# check to see if we need to create the output directory and change directory to it
+if (!(test-path $OutputDirectory)){
+    mkdir $OutputDirectory | Out-Null
+}
+
 Set-Location $OutputDirectory
 # Metadata: date and current user
 Write-Output $now | Out-File METADATA
 whoami /ALL >> METADATA
-# Alternate command
-# whoami /useraccount >> METADATA
+
 
 ####################### Machine and Operating system information
 
@@ -125,7 +130,7 @@ If ( Prepare-Section -Index "01" -Name "Machine and Operating system information
 
 ####################### Network
 
-If ( Prepare-Section -Index "03" -Name "Network configuration and connectivity information" ) {
+If ( Prepare-Section -Index "02" -Name "Network configuration and connectivity information" ) {
     # Traditional commands
     cmd /c "netstat -nabo > ${SectionPreffix}netstat.txt"
     # netstat, parsing the output to include process information
@@ -152,7 +157,7 @@ If ( Prepare-Section -Index "03" -Name "Network configuration and connectivity i
 
 ####################### Services, process and applications
 
-If ( Prepare-Section -Index "05" -Name "Startup applications" ) {
+If ( Prepare-Section -Index "03" -Name "Startup applications" ) {
     # Services run when the system starts
     Get-CimInstance win32_service -Filter "startmode = 'auto'" | Export-Clixml ${SectionPreffix}StartupServices.xml
     # Applications run when the system starts
@@ -163,7 +168,7 @@ If ( Prepare-Section -Index "05" -Name "Startup applications" ) {
 
 ####################### Scheduled jobs
 
-If ( Prepare-Section -Index "13" -Name "Scheduled jobs" ) {
+If ( Prepare-Section -Index "4" -Name "Scheduled jobs" ) {
     Get-ScheduledTask | Export-Clixml  ${SectionPreffix}ScheduledTask.xml
     Get-ScheduledJob | Export-Clixml  ${SectionPreffix}ScheduledJob.xml
     # Traditional commands
@@ -173,7 +178,7 @@ If ( Prepare-Section -Index "13" -Name "Scheduled jobs" ) {
 
 ####################### Active network connections and related process
 
-If ( Prepare-Section -Index "14" -Name "Active network connections and related process" ) {
+If ( Prepare-Section -Index "5" -Name "Active network connections and related process" ) {
     # active networks
     Get-NetConnectionProfile | Export-Clixml  ${SectionPreffix}NetConnectionProfile.xml
     # TCP connections (established, listening)
@@ -184,13 +189,13 @@ If ( Prepare-Section -Index "14" -Name "Active network connections and related p
 
 ####################### Hotfix
 
-If ( Prepare-Section -Index "15" -Name "Hotfix" ) {
+If ( Prepare-Section -Index "6" -Name "Hotfix" ) {
     Get-HotFix | Export-Clixml ${SectionPreffix}Hotfix.xml
 }
 
 ####################### Installed applications
 
-If ( Prepare-Section -Index "16" -Name "Installed applications" ) {
+If ( Prepare-Section -Index "7" -Name "Installed applications" ) {
     # Installed applications according to wmic
     # This list doesn't include "applets" in the starting menu, nor windows utilities such as the clock
     get-ciminstance -class win32_product | Export-Clixml ${SectionPreffix}InstalledApplications.xml
@@ -204,17 +209,18 @@ If ( Prepare-Section -Index "16" -Name "Installed applications" ) {
 
 If ( Prepare-Section -Index $TotalSections -Name "Converting files" ) {
      #Converts all XML files into CSV, for easy greps and rvt2, and human readable lists
-    Get-ChildItem -File *xml -Recurse | ForEach-Object {
+    Get-ChildItem -path -File *xml -Recurse | ForEach-Object {
         Import-Clixml $_ | Export-Csv -NoTypeInformation ($_.FullName + ".csv")
         # Import-Clixml $_ | Format-List * | Out-File ($_.FullName + ".txt")
     }
 }
 
+# potentially remove
 # Create ZIP and calculate its hash value
-Set-Location ..
-Compress-Archive -Path $OutputDirectory -DestinationPath $OutputZipFile
-Get-FileHash -Algorithm SHA256 $OutputZipFile | Export-Clixml $OutputHashFile
+# Set-Location ..
+# Compress-Archive -Path $OutputDirectory -DestinationPath $OutputZipFile
+# Get-FileHash -Algorithm SHA256 $OutputZipFile | Export-Clixml $OutputHashFile
 
-$now = Get-Date
-$hash = Import-Clixml $OutputHashFile
-Write-Host "The collection process ended. Output file and hash: $hash. Date: $now" -ForegroundColor Green
+# $now = Get-Date
+# $hash = Import-Clixml $OutputHashFile
+# Write-Host "The collection process ended. Output file and hash: $hash. Date: $now" -ForegroundColor Green
