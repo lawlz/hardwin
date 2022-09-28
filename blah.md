@@ -14,7 +14,7 @@ This presentation will go over some hardening goals for Windows, tools and techn
 2. Tools and Techniques
     * GPOs - for the pros
     * Microsoft Security Baselines
-    * MS Security Configuration Manager
+    * MS Security Compliance Manager - https://www.microsoft.com/en-us/download/details.aspx?id=53353
     * Desired State Config
     * Hacking direct...  reg/bcedit/secedit/auditpol/net, yay!
 3.  The way I do it today.
