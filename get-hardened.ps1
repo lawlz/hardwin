@@ -1,8 +1,8 @@
 <#
     .Synopsis
-        this will get all services status and backup that up
-        There is a set option as well in this.  
-        Also there is a diff option too, to see what the harden csv settings you choose.
+        This will get all services status and backup that up
+        TODO: There is a set option as well in this.  
+        TODO: Also there is a diff option too, to see what the harden csv settings you choose.
     .DESCRIPTION
         TODO:  Make this easily extensible
                 
@@ -10,7 +10,8 @@
         
     
     Resources:
-        Two main resources this was combined from:
+        Main resources this was combined from:
+            https://github.com/0x6d69636b/windows_hardening
             https://github.com/Disassembler0/Win10-Initial-Setup-Script
             https://github.com/ssh3ll/Windows-10-Hardening
 
@@ -19,7 +20,9 @@
     Cobbler: JimmyJames
 
         .EXAMPLE
-            get-hardened.ps1 
+            get-hardened.ps1 -preset default.preset -noBackup
+            
+        This command will run the hardening with the default preset and not do a backup.
 #>
 
 param(
@@ -69,7 +72,7 @@ if (-not $noBackup){
         $reg = {'hklm','hkcu','hkcr'}
         if (test-path -Path $regBckpDir\*.reg) {  
             for ($i = 0; $i -lt $reg.length; $i++) {
-                move-item $regBckpDir\$reg[$i].reg $regBckpDir\$reg[$i].reg.bak$(Get-Date) 
+                move-item $regBckpDir\$reg[$i].reg $regBckpDir\$reg[$i].reg.bak$(Get-Date -format FileDateTime) 
                 # Perform a backup of the interested Registry Hives
                 reg export HKLM $regBckpDir\$reg[$i].reg | Out-Null
                 Write-Host("$reg[$i] saved successfully")        
