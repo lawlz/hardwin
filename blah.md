@@ -8,10 +8,14 @@ This presentation will go over some hardening goals for Windows, tools and techn
     * Mitigate exploitable Vulns
     * Lower attack surface
     * Follow a best practice or multiple
+        - STIGs
+        - Windows security baselines
+        - CIS benchmarks
 2. Tools and Techniques
+    * GPOs - for the pros
     * Microsoft Security Baselines
     * MS Security Configuration Manager
-    * GPOs - for the pros
     * Desired State Config
+    * Hacking direct...  reg/bcedit/secedit/auditpol/net, yay!
 3.  The way I do it today.
     * PowerShell of course, let's go!
