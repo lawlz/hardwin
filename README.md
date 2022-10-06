@@ -60,18 +60,19 @@ https://github.com/cutaway-security/chaps
 
 This guy did an amazing job documenting a best practice and how to maintain and support - [however it is archived...](https://github.com/Disassembler0/Win10-Initial-Setup-Script)  
 
-Other interesting ones:
-https://github.com/SwiftOnSecurity/OrgKit
+[Other interesting ones](https://github.com/SwiftOnSecurity/OrgKit)
 
-Already packaged:
-https://github.com/AndyFul/Hard_Configurator
+[Already packaged](https://github.com/AndyFul/Hard_Configurator)
 
-Neat privacy related repo:
-https://github.com/adolfintel/Windows10-Privacy
+[Neat privacy related repo](https://github.com/adolfintel/Windows10-Privacy)
 
 
 ## Way Forward
 
+Using the PowerShell - get-hardened.  May create a set-hardened.  Was going to use Hard Kitty's csv to allow others to modify, insteady, I am thinking I like the ini file type being used today.
+
+
+***Deprecated***
 * THis is also a good potential, last update late 2018, but this is NSA created and approved hardening standards for [high secure environments](https://github.com/nsacyber/Windows-Secure-Host-Baseline).  Handle with care, since I have bricked a machine applying everything NSA/DISA suggested in the past....
   * Regardless, this has a great little 'validation' or checker script that could come in handy...
   * **Issue** the offline script uses the admx files for where it pulls the configs from, verbatim, would need to modify or export new GPO admx files somehow.  It is XML and is not easily modded or updated as a baseline config source...

@@ -1,6 +1,6 @@
 <#
     .Synopsis
-        This will get all services status and backup that up
+        This tool is used to harden a Windows operating system.  Initially intended for a Windows Home application.
         TODO: There is a set option as well in this.  
         TODO: Also there is a diff option too, to see what the harden csv settings you choose.
     .DESCRIPTION
