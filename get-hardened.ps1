@@ -15,7 +15,7 @@
             https://github.com/Disassembler0/Win10-Initial-Setup-Script
             https://github.com/ssh3ll/Windows-10-Hardening
 
-        I pulled from other sources as well.
+        I pulled from other sources as well and should be noted within.
 
     Cobbler: JimmyJames
 
@@ -42,21 +42,23 @@ Function Get-FileName {
     $OpenFileDialog.filename
 }
 
+function IsAdmin() {  
+	$currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
+	return $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+}
+
 # make sure the preset file is there
 if (-not $presetLocation) {
     write-host "Please select the file to pull your presets from"
     $presetLocation = Get-FileName
 }
-$presetLocation
-
-# These next few lines are from ssh3ll/Windows-10-Hardening repo
 
 # Make sure the script is run with Administrator privileges
-# if (-Not ($IsAdmin))
-# {
-# 	Write-Warning("The script must be executed with Administrator privileges")
-# 	return
-# }
+if (-Not ($IsAdmin))
+{
+	Write-Warning("The script must be executed with Administrator privileges")
+	return
+}
 
 if (-not $noBackup){
     # Let the user choose the registry backup destination directory
@@ -87,9 +89,7 @@ if (-not $noBackup){
 [regex]$getNoSet = "^#.*"
 $presets = @()
 $allPresets = get-content $presetLocation 
-$allpresets
 foreach ($preset in $allPresets) {
-    Write-Host $preset
     if($preset -notmatch $getNoSet) {
         $presets += ($preset.Split("#")[0].Trim())
         
@@ -102,11 +102,8 @@ Import-Module ".\Utils.psm1"
 foreach ($config in $presets) {
     # only run if $config has a non empty string
     if ($config) {
-        write-host "running $config"
         Invoke-Expression $config
-        
     }
-
 }
 
 
