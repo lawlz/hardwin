@@ -1,3 +1,4 @@
 evidence*
 *.log
 *.csv
+!machine.csv
