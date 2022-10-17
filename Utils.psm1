@@ -3812,7 +3812,7 @@ function IsAdmin() {
 
 # Wait for key press
 Function WaitForKey {
-	Write-Output "`nPress any key to continue..."
+	Write-Output "`nPress any key to continue...`nIf machine isn't restarted automatically, please restart to take full effect."
 	[Console]::ReadKey($true) | Out-Null
 }
 
