@@ -3797,15 +3797,6 @@ function Get-Folder($initialDirectory)
 	return $folder
 }
 
-
-function IsAdmin() {  
-	$currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
-	return $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
-}
-
-
-
-
 ##########
 #region Auxiliary Functions
 ##########
