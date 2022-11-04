@@ -62,8 +62,7 @@ if (-not $presetLocation) {
 }
 
 # Make sure the script is run with Administrator privileges
-if (-Not ($IsAdmin))
-{
+if (-not $IsAdmin){
 	Write-Warning("The script must be executed with Administrator privileges")
 	return
 }
