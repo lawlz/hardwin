@@ -44,7 +44,15 @@ Function Get-FileName {
 
 function IsAdmin() {  
 	$currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
-	return $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+	if ($currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+        return True
+    }
+    elseif ($currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrators)) {
+        return True
+    } 
+    else {
+        return False
+    }
 }
 
 # make sure the preset file is there
