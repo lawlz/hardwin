@@ -47,9 +47,6 @@ function IsAdmin() {
 	if ($currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
         return $True
     }
-    elseif ($currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrators)) {
-        return $True
-    } 
     else {
         return $False
     }
@@ -62,7 +59,7 @@ if (-not $presetLocation) {
 }
 
 # Make sure the script is run with Administrator privileges
-if (-not $IsAdmin){
+if (-not (IsAdmin)){
 	Write-Warning("The script must be executed with Administrator privileges")
 	return
 }
