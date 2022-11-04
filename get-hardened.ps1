@@ -45,13 +45,13 @@ Function Get-FileName {
 function IsAdmin() {  
 	$currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
 	if ($currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-        return True
+        return $True
     }
     elseif ($currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrators)) {
-        return True
+        return $True
     } 
     else {
-        return False
+        return $False
     }
 }
 
