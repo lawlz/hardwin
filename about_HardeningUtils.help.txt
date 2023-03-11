@@ -1,0 +1,37 @@
+
+TOPIC
+    about_hardeningUtils
+
+SHORT DESCRIPTION
+    This module is used for the get-hardened command but can be imported directly as well.
+
+
+LONG DESCRIPTION    
+    This is just the utils module, import via get-hardened or import via example.
+
+        From Dissembler0
+        ##########
+        # Win 10 / Server 2016 / Server 2019 Initial Setup Script - Tweak library
+        # Author: Disassembler <disassembler@dasm.cz>
+        # Version: v3.10, 2020-07-15
+        # Source: https://github.com/Disassembler0/Win10-Initial-Setup-Script
+        ##########
+
+
+TODO:  Make this easily extensible
+            
+Dependencies:
+    
+
+Resources:
+    Main resources this was combined from:
+        https://github.com/Disassembler0/Win10-Initial-Setup-Script
+
+
+Cobbler: JimmyJames
+
+EXAMPLES
+    
+    import-module .\Utils.psm1
+        
+    This command will import the module into the running session.
