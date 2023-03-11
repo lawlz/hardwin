@@ -43,6 +43,7 @@ Function Get-FileName {
 }
 
 function IsAdmin() {  
+    # Build the object first then query it below.
 	$currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
 	if ($currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
         return $True
@@ -90,9 +91,12 @@ if (-not $noBackup){
 }
 
 # get the preset file settings
+# regex to find every line that does not start with '#'
 [regex]$getNoSet = "^#.*"
 $presets = @()
+# Get the content of the preset file and add to var
 $allPresets = get-content $presetLocation 
+# Loop through to find the valid setting line
 foreach ($preset in $allPresets) {
     if($preset -notmatch $getNoSet) {
         $presets += ($preset.Split("#")[0].Trim())
@@ -101,7 +105,7 @@ foreach ($preset in $allPresets) {
 }
 
 # Import required modules
-Import-Module ".\Utils.psm1"
+Import-Module ".\hardeningUtils.psm1"
 # seperate each command in config
 foreach ($config in $presets) {
     # only run if $config has a non empty string
