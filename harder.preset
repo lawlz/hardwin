@@ -9,19 +9,19 @@
 DisableTelemetry                # EnableTelemetry
 DisableCortana                  # EnableCortana
 DisableWiFiSense                # EnableWiFiSense
-# DisableSmartScreen            # EnableSmartScreen
+DisableSmartScreen            # EnableSmartScreen
 # DisableWebSearch              # EnableWebSearch
 DisableAppSuggestions           # EnableAppSuggestions
 DisableActivityHistory          # EnableActivityHistory
-# DisableSensors                # EnableSensors
+DisableSensors                # EnableSensors
 DisableLocation                 # EnableLocation
 DisableMapUpdates               # EnableMapUpdates
 DisableFeedback                 # EnableFeedback
 DisableTailoredExperiences      # EnableTailoredExperiences
 DisableAdvertisingID            # EnableAdvertisingID
 DisableWebLangList              # EnableWebLangList
-# DisableBiometrics             # EnableBiometrics
-# DisableCamera                 # EnableCamera
+DisableBiometrics             # EnableBiometrics
+DisableCamera                 # EnableCamera
 # DisableMicrophone             # EnableMicrophone
 DisableErrorReporting           # EnableErrorReporting
 DisableDiagTrack                # EnableDiagTrack
@@ -31,24 +31,23 @@ DisableWAPPush                  # EnableWAPPush
 
 ### UWP Privacy Tweaks ###
 DisableUWPBackgroundApps        # EnableUWPBackgroundApps
-# DisableUWPVoiceActivation     # EnableUWPVoiceActivation
-# DisableUWPNotifications       # EnableUWPNotifications
-# DisableUWPAccountInfo         # EnableUWPAccountInfo
-# DisableUWPContacts            # EnableUWPContacts
-# DisableUWPCalendar            # EnableUWPCalendar
-# DisableUWPPhoneCalls          # EnableUWPPhoneCalls
-# DisableUWPCallHistory         # EnableUWPCallHistory
-# DisableUWPEmail               # EnableUWPEmail
-# DisableUWPTasks               # EnableUWPTasks
-# DisableUWPMessaging           # EnableUWPMessaging
-# DisableUWPRadios              # EnableUWPRadios
-# DisableUWPOtherDevices        # EnableUWPOtherDevices
-# DisableUWPDiagInfo            # EnableUWPDiagInfo
-# DisableUWPFileSystem          # EnableUWPFileSystem
-# DisableUWPSwapFile            # EnableUWPSwapFile
+DisableUWPVoiceActivation     # EnableUWPVoiceActivation
+DisableUWPNotifications       # EnableUWPNotifications
+DisableUWPAccountInfo         # EnableUWPAccountInfo
+DisableUWPContacts            # EnableUWPContacts
+DisableUWPCalendar            # EnableUWPCalendar
+DisableUWPPhoneCalls          # EnableUWPPhoneCalls
+DisableUWPCallHistory         # EnableUWPCallHistory
+DisableUWPEmail               # EnableUWPEmail
+DisableUWPTasks               # EnableUWPTasks
+DisableUWPMessaging           # EnableUWPMessaging
+DisableUWPRadios              # EnableUWPRadios
+DisableUWPOtherDevices        # EnableUWPOtherDevices
+DisableUWPDiagInfo            # EnableUWPDiagInfo
+DisableUWPFileSystem          # EnableUWPFileSystem
+DisableUWPSwapFile            # EnableUWPSwapFile
 
 ### Security Tweaks ###
-# SetUACLow                     # SetUACHigh
 DisableAdminShares              # EnableAdminShares
 EnableFirewall                  # DisableFirewall 
 # HideDefenderTrayIcon          # ShowDefenderTrayIcon
