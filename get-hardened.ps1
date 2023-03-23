@@ -20,9 +20,15 @@
     Cobbler: JimmyJames
 
         .EXAMPLE
-            get-hardened.ps1 -preset default.preset -noBackup
+            get-hardened.ps1 -preset default.preset
             
-        This command will run the hardening with the default preset and not do a backup.
+        This command will not run the backup process.  Curr
+
+        .EXAMPLE
+            get-hardened.ps1 -preset default.preset -Backup
+            
+        This command will run the hardening with the default preset and do a backup.
+
 #>
 
 param(
@@ -41,6 +47,14 @@ Function Get-FileName {
     $OpenFileDialog.ShowDialog() | Out-Null
     $OpenFileDialog.filename
 }
+
+Function open-directory {   
+    [System.Reflection.Assembly]::LoadWithPartialName("System.windows.forms") | Out-Null
+    $openFolderDialog = New-Object System.Windows.Forms.FolderBrowserDialog
+    $openFolderDialog.ShowDialog() 
+    return $openFolderDialog.SelectedPath
+}
+
 
 function IsAdmin() {  
     # Build the object first then query it below.
@@ -65,10 +79,10 @@ if (-not (IsAdmin)){
 	return
 }
 
-if (-not $noBackup){
+if ($Backup){
     # Let the user choose the registry backup destination directory
     write-host "Where would you like to backup the files?"
-    $regBckpDir = Get-Filename
+    $regBckpDir = open-directory
     if (!$regBckpDir) {
         Write-Warning("You must select a directory to save the .reg files")
         return
