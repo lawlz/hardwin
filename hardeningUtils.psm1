@@ -36,7 +36,7 @@ function get-appxinstallation {
 #this is a function to set the service to disbled, manual or automatic
 function set-serviceStartup($selectedService,$startup) {
 	try {
-		set-service -name $selectedService.Name -StartupType $startup
+		set-service -name $selectedService.Name -StartupType $startup -force 
 	}
 	catch {
 		write-host "unable to set $selectedService" 
@@ -151,13 +151,6 @@ Function DisableSmartScreen {
 	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\MicrosoftEdge\PhishingFilter" -Name "EnabledV9" -Type DWord -Value 0
 }
 
-# Enable SmartScreen Filter
-Function EnableSmartScreen {
-	Write-Output "Enabling SmartScreen Filter..."
-	Remove-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" -Name "EnableSmartScreen" -ErrorAction SilentlyContinue
-	Remove-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\MicrosoftEdge\PhishingFilter" -Name "EnabledV9" -ErrorAction SilentlyContinue
-}
-
 # Disable Web Search in Start Menu
 Function DisableWebSearch {
 	Write-Output "Disabling Bing Search in Start Menu..."
@@ -167,14 +160,6 @@ Function DisableWebSearch {
 		New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search" -Force | Out-Null
 	}
 	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search" -Name "DisableWebSearch" -Type DWord -Value 1
-}
-
-# Enable Web Search in Start Menu
-Function EnableWebSearch {
-	Write-Output "Enabling Bing Search in Start Menu..."
-	Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Name "BingSearchEnabled" -ErrorAction SilentlyContinue
-	Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Name "CortanaConsent" -Type DWord -Value 1
-	Remove-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search" -Name "DisableWebSearch" -ErrorAction SilentlyContinue
 }
 
 # Disable Application suggestions and automatic installation
@@ -643,6 +628,8 @@ Function DisableAdminShares {
 	Write-Output "Disabling implicit administrative shares..."
 	Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" -Name "AutoShareServer" -Type DWord -Value 0
 	Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" -Name "AutoShareWks" -Type DWord -Value 0
+	set-serviceStartup -name workstation -startup disabled
+	set-serviceStartup -name server -startup disabled  
 }
 
 # Disable Firewall
@@ -951,11 +938,6 @@ Function DisableSMB1 {
 	Set-SmbServerConfiguration -EnableSMB1Protocol $false -Force
 }
 
-# Enable obsolete SMB 1.0 protocol - Disabled by default since 1709
-Function EnableSMB1 {
-	Write-Output "Enabling SMB 1.0 protocol..."
-	Set-SmbServerConfiguration -EnableSMB1Protocol $true -Force
-}
 
 # Disable SMB Server - Completely disables file and printer sharing, but leaves the system able to connect to another SMB server as a client
 # Note: Do not run this if you plan to use Docker and Shared Drives (as it uses SMB internally), see https://github.com/Disassembler0/Win10-Initial-Setup-Script/issues/216
@@ -966,12 +948,6 @@ Function DisableSMBServer {
 	Disable-NetAdapterBinding -Name "*" -ComponentID "ms_server"
 }
 
-# Enable SMB Server
-Function EnableSMBServer {
-	Write-Output "Enabling SMB Server..."
-	Set-SmbServerConfiguration -EnableSMB2Protocol $true -Force
-	Enable-NetAdapterBinding -Name "*" -ComponentID "ms_server"
-}
 
 # Disable NetBIOS over TCP/IP on all currently installed network interfaces
 Function DisableNetBIOS {
@@ -979,11 +955,7 @@ Function DisableNetBIOS {
 	Set-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\services\NetBT\Parameters\Interfaces\Tcpip*" -Name "NetbiosOptions" -Type DWord -Value 2
 }
 
-# Enable NetBIOS over TCP/IP on all currently installed network interfaces
-Function EnableNetBIOS {
-	Write-Output "Enabling NetBIOS over TCP/IP..."
-	Set-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\services\NetBT\Parameters\Interfaces\Tcpip*" -Name "NetbiosOptions" -Type DWord -Value 0
-}
+
 
 # Disable Link-Local Multicast Name Resolution (LLMNR) protocol
 Function DisableLLMNR {
@@ -994,11 +966,6 @@ Function DisableLLMNR {
 	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\DNSClient" -Name "EnableMulticast" -Type DWord -Value 0
 }
 
-# Enable Link-Local Multicast Name Resolution (LLMNR) protocol
-Function EnableLLMNR {
-	Write-Output "Enabling Link-Local Multicast Name Resolution (LLMNR)..."
-	Remove-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\DNSClient" -Name "EnableMulticast" -ErrorAction SilentlyContinue
-}
 
 # Disable Local-Link Discovery Protocol (LLDP) for all installed network interfaces
 Function DisableLLDP {
@@ -1006,11 +973,7 @@ Function DisableLLDP {
 	Disable-NetAdapterBinding -Name "*" -ComponentID "ms_lldp"
 }
 
-# Enable Local-Link Discovery Protocol (LLDP) for all installed network interfaces
-Function EnableLLDP {
-	Write-Output "Enabling Local-Link Discovery Protocol (LLDP)..."
-	Enable-NetAdapterBinding -Name "*" -ComponentID "ms_lldp"
-}
+
 
 # Disable Local-Link Topology Discovery (LLTD) for all installed network interfaces
 Function DisableLLTD {
@@ -1019,12 +982,6 @@ Function DisableLLTD {
 	Disable-NetAdapterBinding -Name "*" -ComponentID "ms_rspndr"
 }
 
-# Enable Local-Link Topology Discovery (LLTD) for all installed network interfaces
-Function EnableLLTD {
-	Write-Output "Enabling Local-Link Topology Discovery (LLTD)..."
-	Enable-NetAdapterBinding -Name "*" -ComponentID "ms_lltdio"
-	Enable-NetAdapterBinding -Name "*" -ComponentID "ms_rspndr"
-}
 
 # Disable Client for Microsoft Networks for all installed network interfaces
 Function DisableMSNetClient {
