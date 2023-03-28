@@ -22,7 +22,7 @@
         .EXAMPLE
             get-hardened.ps1 -preset default.preset
             
-        This command will not run the backup process.  Curr
+        This command will not run the backup process. 
 
         .EXAMPLE
             get-hardened.ps1 -preset default.preset -Backup
@@ -32,9 +32,9 @@
 #>
 
 param(
- [Parameter(Mandatory=$false,HelpMessage='Please Enter path for harden_n config:')][string]$presetLocation,
- [Parameter(Mandatory=$false,HelpMessage="Enter a path to store the logs if you wanna")][string]$log,
- [Parameter(Mandatory=$false,HelpMessage="This is necessary if you don't wish to backup")][switch]$noBackup
+    [Parameter(Mandatory = $false, HelpMessage = 'Please Enter path for harden_n config:')][string]$presetLocation,
+    [Parameter(Mandatory = $false, HelpMessage = "Enter a path to store the logs if you wanna")][string]$log,
+    [Parameter(Mandatory = $false, HelpMessage = "This is necessary if you wish to do a backup")][switch]$backup
 )
 
 
@@ -58,8 +58,8 @@ Function open-directory {
 
 function IsAdmin() {  
     # Build the object first then query it below.
-	$currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
-	if ($currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+    $currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
+    if ($currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
         return $True
     }
     else {
@@ -74,12 +74,12 @@ if (-not $presetLocation) {
 }
 
 # Make sure the script is run with Administrator privileges
-if (-not (IsAdmin)){
-	Write-Warning("The script must be executed with Administrator privileges")
-	return
+if (-not (IsAdmin)) {
+    Write-Warning("The script must be executed with Administrator privileges")
+    return
 }
 
-if ($Backup){
+if ($Backup) {
     # Let the user choose the registry backup destination directory
     write-host "Where would you like to backup the files?"
     $regBckpDir = open-directory
@@ -90,7 +90,7 @@ if ($Backup){
     else {
         # backup existing reg files
         Write-Host("Backing up registry hives..")
-        $reg = {'hklm','hkcu','hkcr'}
+        $reg = { 'hklm', 'hkcu', 'hkcr' }
         if (test-path -Path $regBckpDir\*.reg) {  
             for ($i = 0; $i -lt $reg.length; $i++) {
                 move-item $regBckpDir\$reg[$i].reg $regBckpDir\$reg[$i].reg.bak$(Get-Date -format FileDateTime) 
@@ -112,7 +112,7 @@ $presets = @()
 $allPresets = get-content $presetLocation 
 # Loop through to find the valid setting line
 foreach ($preset in $allPresets) {
-    if($preset -notmatch $getNoSet) {
+    if ($preset -notmatch $getNoSet) {
         $presets += ($preset.Split("#")[0].Trim())
         
     }
@@ -135,3 +135,4 @@ foreach ($config in $presets) {
 #  App not uninstalling:  Tiktok, prime vid, Disney and some PS thing
 #  Run a check routine maybe?  Like a self nmap or something?GET-=
 #
+
