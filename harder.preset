@@ -8,7 +8,7 @@
 ### Privacy Tweaks ###
 DisableTelemetry                # EnableTelemetry
 DisableCortana                  # EnableCortana
-DisableWiFiSense                # EnableWiFiSense
+# DisableWiFiSense                # EnableWiFiSense
 DisableSmartScreen            # EnableSmartScreen
 # DisableWebSearch              # EnableWebSearch
 DisableAppSuggestions           # EnableAppSuggestions
