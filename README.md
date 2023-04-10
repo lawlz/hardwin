@@ -27,7 +27,9 @@ It was tested mostly using Windows 10 21H2.  The script is meant to be easy to r
     - This preset should work for most people.  You still want to look through to see if there is anything you don't want to disable.
 
 
-###  How to Run
+###  Running Examples
+
+From the help file for it:
 
 ```
     -------------------------- EXAMPLE 1 --------------------------
