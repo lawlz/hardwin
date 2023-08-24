@@ -14,7 +14,7 @@ This presentation will go over some hardening goals for Windows, tools and techn
 2. Tools and Techniques
     * GPOs - for the pros
     * Microsoft Security Baselines (MSBs)
-    * [Security Compliance Toolkit is great for viewing MSBs]([url](https://www.microsoft.com/en-US/download/details.aspx?id=55319))  
+    * [Security Compliance Toolkit is great for viewing MSBs](https://www.microsoft.com/en-US/download/details.aspx?id=55319)
     * Desired State Config
     * Hacking direct...  reg/bcedit/secedit/auditpol/net, yay!
 3.  The way I do it today.
