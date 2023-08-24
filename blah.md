@@ -13,8 +13,8 @@ This presentation will go over some hardening goals for Windows, tools and techn
         - CIS benchmarks
 2. Tools and Techniques
     * GPOs - for the pros
-    * Microsoft Security Baselines
-    * MS Security Compliance Manager - https://www.microsoft.com/en-us/download/details.aspx?id=53353
+    * Microsoft Security Baselines (MSBs)
+    * [Security Compliance Toolkit is great for viewing MSBs]([url](https://www.microsoft.com/en-US/download/details.aspx?id=55319))  
     * Desired State Config
     * Hacking direct...  reg/bcedit/secedit/auditpol/net, yay!
 3.  The way I do it today.
